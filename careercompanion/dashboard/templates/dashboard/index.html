@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+  <script src="{% static 'dashboard/script.js' %}"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+     <div style="display: flex; align-items: center;">
+    <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+    <div class="logo">Career Companion</div>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search..." id="searchBar">
+      <button class="search-btn">🔍</button>
+      <br>
+      <div id="suggestions" class="suggestions-box"></div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#features">Features</a>
+      <a href="{% url 'login' %}" class="btn">Login</a>
+      <a href="{% url 'signup' %}" class="btn primary">Sign Up</a>
+    </nav>
+  </header>
+  <a href="chatbot.html" class="chatbot-btn" title="Chat with AI">💬Career AI</a>
+    <!-- Side Menu -->
+<div id="sideMenu" class="side-menu">
+    <h4 class="menu-content">MENU</h4>
+  <a href="{% url 'index' %}">Home</a>
+  <div class="dropdown">
+    <div class="dropdown-content" id="featuresDropdown">
+      <a href="{% url 'index' %}">Resume Builder</a>
+      <a href="{% url 'index' %}">Job Search</a>
+      <a href="{% url 'index' %}">AI Career Advisor</a>
+      <a href="{% url 'index' %}">Skill Assessments</a>
+      <a href="{% url 'index' %}">All Features</a>
+    </div>
+  </div>
+
+  <a href="#">About</a>
+
+  <div class="menu-footer">
+    <button onclick="window.location.href='{% url "signup" %}'">Sign Up</button>
+    <button class="chatbot-btn">AI Chatbot</button>
+  </div>
+</div>
+</div>
+
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Track Your Growth. Showcase Your Skills.</h1>
+      <p>Log your journey, visualize your progress, and create a standout resume in minutes.</p>
+      <div class="hero-buttons">
+        <a href="{% url 'signup' %}" class="btn primary">Get Started</a>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://undraw.co/api/illustrations/skill_development.svg" alt="Skill Growth">
+    </div>
+  </section>
+
+  <!-- Features Section -->
+<!-- Features Section -->
+<section id="features">
+  <h2>Features</h2>
+  <div class="features-grid">
+    <a href="progress-tracker.html" class="feature-card">
+      <div class="icon">📅</div>
+      <h3>Progress Tracker</h3>
+      <p>Log your activities and accomplishments weekly or monthly.</p>
+    </a>
+    <a href="skill-cloud.html" class="feature-card">
+      <div class="icon">☁️</div>
+      <h3>Skill Cloud</h3>
+      <p>Visualize your growing expertise in an interactive skill cloud.</p>
+    </a>
+    <a href="timeline.html" class="feature-card">
+      <div class="icon">📊</div>
+      <h3>Timeline View</h3>
+      <p>See your career journey and project milestones over time.</p>
+    </a>
+    <a href="resume-generator.html" class="feature-card">
+      <div class="icon">📄</div>
+      <h3>Resume Generator</h3>
+      <p>Convert your logged progress into a professional resume instantly.</p>
+    </a>
+    <a href="learning-hub.html" class="feature-card">
+      <div class="icon">🎯</div>
+      <h3>Learning Hub</h3>
+      <p>Access structured lessons and track your learning progress.</p>
+    </a>
+  </div>
+</section>
+
+  <!-- Call to Action -->
+  <section class="cta">
+    <h2>Join Career Companion Today — It's Free!</h2>
+    <a href="signup.html" class="btn primary">Sign Up</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Career Companion. All rights reserved.</p>
+  </footer>
+
+  <script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.feature-card').forEach(card => {
+    observer.observe(card);
+  });
+</script>
+<script>
+  
+  
+    </script>
+</body>
+</html>

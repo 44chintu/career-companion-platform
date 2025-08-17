@@ -1,0 +1,25 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+{% block page_description %}Overview of your career journey{% endblock %}
+
+{% block content %}
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>Goal Paths</h3>
+        <p>{{ learning_goals_count }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Skills</h3>
+        <p>{{ skills_count }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Projects</h3>
+        <p>{{ projects_count}}</p>
+    </div>
+</div>
+
+  <!-- Features Section -->
+<!-- Features Section -->
+
+{% endblock %}

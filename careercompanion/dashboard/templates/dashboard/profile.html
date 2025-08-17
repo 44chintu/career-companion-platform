@@ -1,0 +1,265 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+{% block page_heading %}My Profile{% endblock %}
+{% block page_description %}Manage your personal details and preferences{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+
+    {% if user.is_authenticated %}
+        <!-- Logged-in Profile Header -->
+        <div class="profile-header">
+            {% if request.user.profile.profile_picture %}
+                <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <!-- Default profile pic -->
+                <img src="{% static 'dashboard/images/default-avatar.png' %}" alt="Default Avatar" class="profile-pic">
+
+            {% endif %}
+            <div>
+                <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+                <p>@{{ request.user.username }}</p>
+                <p>Email: {{ request.user.email }}</p>
+                <p>Joined: {{ request.user.date_joined|date:"F j, Y" }}</p>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="profile-stats">
+            <div class="stat-card">
+                <h3>Skills Logged</h3>
+                <p>{{ skills_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Projects</h3>
+                <p>{{ projects_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Goal Paths</h3>
+                <p>{{ learning_goals_count }}</p>
+            </div>
+        </div>
+        <!-- Edit Profile -->
+        <div>
+            <div class="profile-completion">
+                <p>Profile Updated: {{ completion }}%</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ completion }}%"></div>
+                </div>
+            </div>
+            <a href="{% url 'password_change' %}">Change Password</a>
+            <a href="{% url 'edit_profile' %}" class="btn btn-login">Complete / Edit Profile</a>
+
+        </div>
+
+    {% else %}
+        <!-- Guest Layout -->
+        <div class="guest-layout">
+            <div class="guest-row">
+                <!-- Guest Card -->
+                <div class="guest-card">
+                    <img src="https://ui-avatars.com/api/?name=Guest&background=random" alt="Guest Avatar" class="guest-avatar">
+
+                    <h2>Welcome, Guest! 👋</h2>
+                    <p class="guest-text">
+                        Create an account or log in to start tracking your skills, projects, and applications.
+                    </p>
+                    <div class="guest-buttons">
+                        <a href="{% url 'login' %}" class="btn btn-login">Log In</a>
+                        <a href="{% url 'signup' %}" class="btn btn-signup">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Why Join -->
+                <div class="why-join">
+                    <h3>Why Join Career Companion?</h3>
+                    <ul>
+                        <li>📅 Track your career progress effortlessly</li>
+                        <li>☁️ Visualize your skills growth</li>
+                        <li>📄 Generate professional resumes in seconds</li>
+                        <li>🎯 Access learning resources tailored for you</li>
+                        <li>🕒 View a timeline of your career journey</li>
+                        <li>🏆 Unlock and showcase achievements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="user-feedback">
+                <h3>What Our Users Say</h3>
+                <div class="feedback-card">
+                    <p>"This app helped me organize my job search like never before!"</p>
+                    <span>- Priya S.</span>
+                </div>
+                <div class="feedback-card">
+                    <p>"I love the Skill Cloud feature. It's motivating to see my growth visually."</p>
+                    <span>- Arjun M.</span>
+                </div>
+                <div class="feedback-card">
+                    <p>"Resume Generator saved me hours of formatting work!"</p>
+                    <span>- Neha K.</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.page-header-content { text-align: center; }
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70vh;
+    gap: 30px;
+}
+
+.profile-completion {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 500;
+}
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #f1f1f1;
+    border-radius: 50px;
+    margin-top: 8px;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #007bff, #0056d2);
+    border-radius: 50px;
+    transition: width 0.4s ease;
+}
+
+/* Logged-in Profile */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profile-stats {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    max-width: 800px;
+}
+.stat-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+}
+
+/* Guest Layout */
+.guest-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+.guest-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+}
+.guest-card, .why-join {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    flex: 1;
+    min-width: 280px;
+    margin: 10px;
+}
+.guest-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.guest-text { color: #555; margin-bottom: 20px; }
+.guest-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.btn-login { background-color: #007bff; color: white; }
+.btn-signup { background-color: #007bff; color: white; }
+.why-join h3 { margin-bottom: 15px; }
+.why-join ul { list-style: none; padding: 0; }
+.why-join li {
+    background: #f9f9f9;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* Feedback Section */
+.user-feedback {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 900px;
+    width: 100%;
+}
+.user-feedback h3 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.feedback-card {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.feedback-card span {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+}
+/* Card hover transition (same as feature cards) */
+.guest-card, .why-join, .feedback-card {
+    transition: all 0.3s ease;
+}
+
+.guest-card:hover, .why-join:hover, .feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.guest-card:hover, .why-join:hover, .feedback-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+</style>
+{% endblock %}

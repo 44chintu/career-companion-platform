@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Career Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="loginstyle.css" />
+
+  <script src="script.js"></script>
+  
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div style="display: flex; align-items: center;">
+      <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+      <div class="logo">
+        <a href="index.html" style="color: inherit; text-decoration: none;">Career Companion</a>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search..." id="searchBar">
+      <button class="search-btn">🔍</button>
+      <div id="suggestions" class="suggestions-box"></div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#features">Features</a>
+      <a href="login.html" class="btn">Login</a>
+      <a href="signup.html" class="btn primary">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Floating Chatbot Button -->
+  <a href="chatbot.html" class="chatbot-btn" title="Chat with AI">💬</a>
+
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <h4 class="menu-content">MENU</h4>
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+      <div class="dropdown-content" id="featuresDropdown">
+        <a href="resume-generator.html">Resume Builder</a>
+        <a href="progress-tracker.html">Progress Tracker</a>
+        <a href="skill-cloud.html">Skill Cloud</a>
+        <a href="timeline.html">Timeline View</a>
+        <a href="learning-hub.html">Learning Hub</a>
+        <a href="index.html#features">All Features</a>
+      </div>
+    </div>
+    <a href="#about">About</a>
+    <div class="menu-footer">
+      <button onclick="window.location.href='signup.html'">Sign Up</button>
+      <button class="chatbot-btn" onclick="window.location.href='chatbot.html'">AI Chatbot</button>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+  <!-- Main Content Area -->
+  <div class="form-container fade-in">
+        <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Enter your credentials to access your account</p>
+        </div>
+        
+        <form id="loginForm" class="auth-form" method="POST" action="#" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    Remember me
+                </label>
+                <a href="#forgot-password" class="forgot-link">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn primary btn-large auth-btn">Sign In</button>
+        </form>
+        
+        <div class="auth-divider">
+            <span>or</span>
+        </div>
+        
+        <div class="social-login">
+            <button type="button" class="btn social-btn google-btn">
+                <span class="social-icon">🔗</span>
+                Continue with Google
+            </button>
+            <button type="button" class="btn social-btn linkedin-btn">
+                <span class="social-icon">💼</span>
+                Continue with LinkedIn
+            </button>
+        </div>
+        
+        <div class="auth-switch">
+            <p>Don't have an account? <a href="signup.html">Create one here</a></p>
+        </div>
+    </div>
+
+      <!-- Additional Info Cards -->
+<section id="features">
+  <h2>Features</h2>
+  <div class="features-grid">
+    <a href="progress-tracker.html" class="feature-card">
+      <div class="icon">📅</div>
+      <h3>Progress Tracker</h3>
+      <p>Log your activities and accomplishments weekly or monthly.</p>
+    </a>
+    <a href="skill-cloud.html" class="feature-card">
+      <div class="icon">☁️</div>
+      <h3>Skill Cloud</h3>
+      <p>Visualize your growing expertise in an interactive skill cloud.</p>
+    </a>
+    <a href="timeline.html" class="feature-card">
+      <div class="icon">📊</div>
+      <h3>Timeline View</h3>
+      <p>See your career journey and project milestones over time.</p>
+    </a>
+    <a href="resume-generator.html" class="feature-card">
+      <div class="icon">📄</div>
+      <h3>Resume Generator</h3>
+      <p>Convert your logged progress into a professional resume instantly.</p>
+    </a>
+    <a href="learning-hub.html" class="feature-card">
+      <div class="icon">🎯</div>
+      <h3>Learning Hub</h3>
+      <p>Access structured lessons and track your learning progress.</p>
+    </a>
+  </div>
+</section>
+      
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </div>
+      <p>&copy; 2025 Career Companion. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Template JavaScript -->
+  <script>
+    // Initialize template functionality
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize search functionality
+      initializeSearch();
+      
+      // Initialize menu functionality
+      initializeMenu();
+      
+      // Initialize any page-specific animations
+      initializeAnimations();
+      
+      // Page-specific initialization
+      if (typeof initializePage === 'function') {
+        initializePage();
+      }
+    });
+
+    function initializeSearch() {
+      const features = [
+        "Progress Tracker",
+        "Skill Cloud", 
+        "Timeline View",
+        "Resume Generator",
+        "Learning Hub"
+      ];
+
+      const featureLinks = {
+        "Progress Tracker": "progress-tracker.html",
+        "Skill Cloud": "skill-cloud.html",
+        "Timeline View": "timeline.html", 
+        "Resume Generator": "resume-generator.html",
+        "Learning Hub": "learning-hub.html"
+      };
+
+      const searchBar = document.getElementById("searchBar");
+      const suggestionsBox = document.getElementById("suggestions");
+
+      if (searchBar && suggestionsBox) {
+        searchBar.addEventListener("input", function () {
+          const query = this.value.toLowerCase().trim();
+          suggestionsBox.innerHTML = "";
+          if (!query) {
+            suggestionsBox.style.display = "none";
+            return;
+          }
+          const matches = features.filter(item => item.toLowerCase().includes(query));
+          if (matches.length) {
+            matches.forEach(match => {
+              const div = document.createElement("div");
+              div.textContent = match;
+              div.addEventListener("click", () => {
+                searchBar.value = match;
+                suggestionsBox.style.display = "none";
+                const link = featureLinks[match];
+                if (link) window.location.href = link;
+              });
+              suggestionsBox.appendChild(div);
+            });
+            suggestionsBox.style.display = "block";
+          } else {
+            suggestionsBox.style.display = "none";
+          }
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!suggestionsBox.contains(e.target) && e.target !== searchBar) {
+            suggestionsBox.style.display = "none";
+          }
+        });
+      }
+    }
+
+    function initializeMenu() {
+      const menuIcon = document.querySelector(".menu-icon");
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+
+      if (menuIcon && sideMenu) {
+        menuIcon.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleMenu();
+        });
+
+        if (overlay) {
+          overlay.addEventListener("click", closeMenu);
+        }
+
+        document.addEventListener("click", (event) => {
+          if (!sideMenu.contains(event.target) && !menuIcon.contains(event.target)) {
+            closeMenu();
+          }
+        });
+      }
+    }
+
+    function toggleMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      
+      if (sideMenu.style.width === "250px") {
+        closeMenu();
+      } else {
+        sideMenu.style.width = "250px";
+        if (overlay) overlay.style.display = "block";
+      }
+    }
+
+    function closeMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      
+      if (sideMenu) sideMenu.style.width = "0";
+      if (overlay) overlay.style.display = "none";
+    }
+
+    function initializeAnimations() {
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      // Observe elements with animation classes
+      document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .feature-card').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Page-specific JavaScript
+    function initializePage() {
+      const loginForm = document.getElementById('loginForm');
+      const socialBtns = document.querySelectorAll('.social-btn');
+      
+      // Handle form submission
+      if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+      }
+      
+      // Handle social login buttons
+      socialBtns.forEach(btn => {
+        btn.addEventListener('click', handleSocialLogin);
+      });
+      
+      // Handle forgot password
+      const forgotLink = document.querySelector('.forgot-link');
+      if (forgotLink) {
+        forgotLink.addEventListener('click', handleForgotPassword);
+      }
+
+      // Real-time validation
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      
+      if (emailInput) {
+        emailInput.addEventListener('blur', validateEmail);
+        emailInput.addEventListener('input', clearError.bind(null, 'emailError'));
+      }
+      
+      if (passwordInput) {
+        passwordInput.addEventListener('blur', validatePassword);
+        passwordInput.addEventListener('input', clearError.bind(null, 'passwordError'));
+      }
+    }
+
+    function validateEmail() {
+      const email = document.getElementById('email').value;
+      const emailError = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!email) {
+        showFieldError('emailError', 'Email is required');
+        return false;
+      } else if (!emailRegex.test(email)) {
+        showFieldError('emailError', 'Please enter a valid email address');
+        return false;
+      } else {
+        clearError('emailError');
+        return true;
+      }
+    }
+
+    function validatePassword() {
+      const password = document.getElementById('password').value;
+      
+      if (!password) {
+        showFieldError('passwordError', 'Password is required');
+        return false;
+      } else if (password.length < 6) {
+        showFieldError('passwordError', 'Password must be at least 6 characters');
+        return false;
+      } else {
+        clearError('passwordError');
+        return true;
+      }
+    }
+
+    function showFieldError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.color = '#dc3545';
+        errorElement.style.fontSize = '0.8rem';
+        errorElement.style.marginTop = '5px';
+      }
+    }
+
+    function clearError(elementId) {
+      const errorElement = document.getElementById(elementId);
+      if (errorElement) {
+        errorElement.textContent = '';
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      
+      // Clear any previous errors
+      clearError('emailError');
+      clearError('passwordError');
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+      
+      // Validate form
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+      
+      if (!isEmailValid || !isPasswordValid) {
+        showMessage('Please fix the errors above', 'error');
+        return;
+      }
+      
+      // Show loading state
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Signing In...';
+      submitBtn.disabled = true;
+      
+      // Simulate API call
+      setTimeout(() => {
+        // In a real app, you'd make an API call here
+        console.log('Login attempt:', { email, password, rememberMe });
+        
+        // For demo purposes, simulate successful login
+        showMessage('Login successful! Redirecting...', 'success');
+        
+        // Store user info if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+        }
+        
+        setTimeout(() => {
+          // Redirect to dashboard or homepage
+          window.location.href = 'index.html';
+        }, 1500);
+      }, 1000);
+    }
+
+    function handleSocialLogin(e) {
+      const provider = e.target.closest('.google-btn') ? 'Google' : 'LinkedIn';
+      showMessage(`${provider} login coming soon!`, 'info');
+    }
+
+    function handleForgotPassword(e) {
+      e.preventDefault();
+      showMessage('Password reset functionality coming soon!', 'info');
+    }
+
+    function showMessage(message, type = 'info') {
+      // Remove any existing messages
+      const existingMessage = document.querySelector('.message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      
+      // Create message element
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message message-${type}`;
+      messageDiv.textContent = message;
+      
+      // Style the message
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 10000;
+        max-width: 300px;
+        animation: slideInRight 0.3s ease-out;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      `;
+      
+      // Set background color based on type
+      const colors = {
+        success: '#28a745',
+        error: '#dc3545',
+        info: '#17a2b8',
+        warning: '#ffc107'
+      };
+      messageDiv.style.backgroundColor = colors[type] || colors.info;
+      
+      // Add to page
+      document.body.appendChild(messageDiv);
+      
+      // Remove after 4 seconds
+      setTimeout(() => {
+        messageDiv.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => {
+          if (document.body.contains(messageDiv)) {
+            document.body.removeChild(messageDiv);
+          }
+        }, 300);
+      }, 4000);
+    }
+
+    // Load remembered email on page load
+    window.addEventListener('load', () => {
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      if (rememberedEmail) {
+        document.getElementById('email').value = rememberedEmail;
+        document.getElementById('rememberMe').checked = true;
+      }
+    });
+
+    // Add CSS for message animations and error styling
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+      
+      .error-message {
+        min-height: 20px;
+        display: block;
+      }
+      
+      .form-group input.error {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+      }
+      
+      .form-group input:focus {
+        outline: none;
+        border-color: #4e73df;
+        box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- REPLACE {{PAGE_TITLE}} with your page title -->
+  <title>{{PAGE_TITLE}} - Career Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div style="display: flex; align-items: center;">
+      <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+      <div class="logo">
+        <a href="index.html" style="color: inherit; text-decoration: none;">Career Companion</a>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search..." id="searchBar">
+      <button class="search-btn">🔍</button>
+      <div id="suggestions" class="suggestions-box"></div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="login.html" class="btn">Login</a>
+      <a href="signup.html" class="btn primary">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Floating Chatbot Button -->
+  <a href="chatbot.html" class="chatbot-btn" title="Chat with AI">💬</a>
+
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <h4 class="menu-content">MENU</h4>
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+      <div class="dropdown-content" id="featuresDropdown">
+        <a href="resume-generator.html">Resume Builder</a>
+        <a href="progress-tracker.html">Progress Tracker</a>
+        <a href="skill-cloud.html">Skill Cloud</a>
+        <a href="timeline.html">Timeline View</a>
+        <a href="learning-hub.html">Learning Hub</a>
+        <a href="index.html#features">All Features</a>
+      </div>
+    </div>
+    <a href="#about">About</a>
+    <div class="menu-footer">
+      <button onclick="window.location.href='signup.html'">Sign Up</button>
+      <button class="chatbot-btn" onclick="window.location.href='chatbot.html'">AI Chatbot</button>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+  <!-- Page Header Section (Optional - Remove if not needed) -->
+  <section class="page-header">
+    <div class="page-header-content">
+      <h1>{{PAGE_HEADING}}</h1>
+      <p>{{PAGE_DESCRIPTION}}</p>
+      <!-- Optional breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>></span>
+        <span>{{CURRENT_PAGE}}</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Content goes here -->
+      {{MAIN_CONTENT}}
+      
+    </div>
+  </main>
+
+  <!-- Optional: Action Section (for CTAs, forms, etc.) -->
+  <section class="action-section">
+    <div class="container">
+      {{ACTION_CONTENT}}
+    </div>
+  </section>
+
+  <!-- Optional: Related Features Section -->
+  <section class="related-features">
+    <div class="container">
+      <h2>Related Features</h2>
+      <div class="features-grid">
+        <!-- Feature cards will be populated based on current page -->
+        {{RELATED_FEATURES}}
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </div>
+      <p>&copy; 2025 Career Companion. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Template JavaScript -->
+  <script>
+    // Initialize template functionality
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize search functionality
+      initializeSearch();
+      
+      // Initialize menu functionality
+      initializeMenu();
+      
+      // Initialize any page-specific animations
+      initializeAnimations();
+      
+      // Page-specific initialization
+      if (typeof initializePage === 'function') {
+        initializePage();
+      }
+    });
+
+    function initializeSearch() {
+      const features = [
+        "Progress Tracker",
+        "Skill Cloud", 
+        "Timeline View",
+        "Resume Generator",
+        "Learning Hub"
+      ];
+
+      const featureLinks = {
+        "Progress Tracker": "progress-tracker.html",
+        "Skill Cloud": "skill-cloud.html",
+        "Timeline View": "timeline.html", 
+        "Resume Generator": "resume-generator.html",
+        "Learning Hub": "learning-hub.html"
+      };
+
+      const searchBar = document.getElementById("searchBar");
+      const suggestionsBox = document.getElementById("suggestions");
+
+      if (searchBar && suggestionsBox) {
+        searchBar.addEventListener("input", function () {
+          const query = this.value.toLowerCase().trim();
+          suggestionsBox.innerHTML = "";
+          if (!query) {
+            suggestionsBox.style.display = "none";
+            return;
+          }
+          const matches = features.filter(item => item.toLowerCase().includes(query));
+          if (matches.length) {
+            matches.forEach(match => {
+              const div = document.createElement("div");
+              div.textContent = match;
+              div.addEventListener("click", () => {
+                searchBar.value = match;
+                suggestionsBox.style.display = "none";
+                const link = featureLinks[match];
+                if (link) window.location.href = link;
+              });
+              suggestionsBox.appendChild(div);
+            });
+            suggestionsBox.style.display = "block";
+          } else {
+            suggestionsBox.style.display = "none";
+          }
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!suggestionsBox.contains(e.target) && e.target !== searchBar) {
+            suggestionsBox.style.display = "none";
+          }
+        });
+      }
+    }
+
+    function initializeMenu() {
+      const menuIcon = document.querySelector(".menu-icon");
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+
+      if (menuIcon && sideMenu) {
+        menuIcon.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleMenu();
+        });
+
+        if (overlay) {
+          overlay.addEventListener("click", closeMenu);
+        }
+
+        document.addEventListener("click", (event) => {
+          if (!sideMenu.contains(event.target) && !menuIcon.contains(event.target)) {
+            closeMenu();
+          }
+        });
+      }
+    }
+
+    function toggleMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      
+      if (sideMenu.style.width === "250px") {
+        closeMenu();
+      } else {
+        sideMenu.style.width = "250px";
+        if (overlay) overlay.style.display = "block";
+      }
+    }
+
+    function closeMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      
+      if (sideMenu) sideMenu.style.width = "0";
+      if (overlay) overlay.style.display = "none";
+    }
+
+    function initializeAnimations() {
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      // Observe elements with animation classes
+      document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .feature-card').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Utility function to update page title
+    function setPageTitle(title) {
+      document.title = title + " - Career Companion";
+    }
+
+    // Utility function to update page heading
+    function setPageHeading(heading, description) {
+      const pageHeaderContent = document.querySelector('.page-header-content h1');
+      const pageHeaderDesc = document.querySelector('.page-header-content p');
+      
+      if (pageHeaderContent) pageHeaderContent.textContent = heading;
+      if (pageHeaderDesc && description) pageHeaderDesc.textContent = description;
+    }
+
+    // Utility function to update breadcrumb
+    function updateBreadcrumb(currentPage) {
+      const breadcrumbCurrent = document.querySelector('.breadcrumb span:last-child');
+      if (breadcrumbCurrent) breadcrumbCurrent.textContent = currentPage;
+    }
+  </script>
+
+</body>
+</html>

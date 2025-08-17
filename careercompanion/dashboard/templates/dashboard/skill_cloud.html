@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Skill Cloud{% endblock %}
+{% block page_heading %}My Skills{% endblock %}
+{% block page_description %}Track and manage your skills{% endblock %}
+
+{% block content %}
+<p>Your skills will be shown here.</p>
+{% endblock %}
+<div class="skill-cloud">
+  <h2>My Skills</h2>
+  <div class="skills-list">
+    <!-- Example skills, replace with dynamic content -->
+    <span class="skill">Python</span>
+    <span class="skill">JavaScript</span>
+    <span class="skill">Django</span>
+    <span class="skill">React</span>
+    <span class="skill">Machine Learning</span>
+  </div>
+    <div class="skill-cloud-visualization">
+        <!-- Placeholder for skill cloud visualization -->
+        <p>Visual representation of your skills will be displayed here.</p> 
+    </div>
+</div>
+<script>
+  // Example JavaScript to handle skill cloud interactions
+  document.addEventListener('DOMContentLoaded', function() {
+    const skills = document.querySelectorAll('.skill');
+    skills.forEach(skill => {
+      skill.addEventListener('click', function() {
+        alert(`You clicked on skill: ${this.textContent}`);
+      });
+    });
+  });
+</script>
+
+
+
+    
