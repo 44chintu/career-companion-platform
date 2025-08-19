@@ -3,7 +3,6 @@
 
 {% block title %}Profile{% endblock %}
 {% block page_heading %}My Profile{% endblock %}
-{% block page_description %}Manage your personal details and preferences{% endblock %}
 
 {% block content %}
 <div class="profile-container">
@@ -53,6 +52,7 @@
             <a href="{% url 'edit_profile' %}" class="btn btn-login">Complete / Edit Profile</a>
 
         </div>
+        
 
     {% else %}
         <!-- Guest Layout -->
@@ -104,6 +104,23 @@
             </div>
         </div>
     {% endif %}
+
+                <!-- Feedback -->
+            <div class="user-feedback">
+                <h3>What Our Users Say</h3>
+                <div class="feedback-card">
+                    <p>"This app helped me organize my job search like never before!"</p>
+                    <span>- Priya S.</span>
+                </div>
+                <div class="feedback-card">
+                    <p>"I love the Skill Cloud feature. It's motivating to see my growth visually."</p>
+                    <span>- Arjun M.</span>
+                </div>
+                <div class="feedback-card">
+                    <p>"Resume Generator saved me hours of formatting work!"</p>
+                    <span>- Neha K.</span>
+                </div>
+            </div>
 </div>
 
 <style>

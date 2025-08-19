@@ -6,13 +6,59 @@ from django.contrib.auth import authenticate, login
 from .forms import ProfileExtraForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
-
+from django.templatetags.static import static
+from .ai_agent import categorize_skills
 
 def index(request):
     return render(request, 'dashboard/index.html')
 # @login_required
 def skill_cloud(request):
-    return render(request, 'dashboard/skill_cloud.html')
+    profile = request.user.profile
+    raw = profile.skills or ""                       # e.g. "Python, Django, SQL"
+    skills = [s.strip() for s in raw.split(",") if s.strip()]
+
+    # Use the free rule-based agent to categorize
+    categorized_skills = categorize_skills(skills)
+
+    # Compute total items to decide empty state
+    total_count = sum(cnt for pairs in categorized_skills.values() for _, cnt in pairs)
+
+    # Icon map (use CDN + your static icons)
+    skill_icons = {
+        "python": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "java": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+        "django": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
+        "javascript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "typescript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        "html": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        "css": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "sql": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        "mysql": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        "postgresql": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+        "mongodb": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+        "react": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "angular": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+        "vue": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+        "flask": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
+        "fastapi": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+        "selenium": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg",
+        "docker": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        "kubernetes": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+        "git": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+        "aws": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
+        "azure": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+        "gcp": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
+        # custom local svgs
+        "power automate": static("dashboard/icons/power-automate.svg"),
+    }
+
+    context = {
+        "categorized_skills": categorized_skills,
+        "skill_icons": skill_icons,
+        "total_count": total_count,
+    }
+    return render(request, "dashboard/skill_cloud.html", context)
+
 @login_required
 def dashboardPage(request):
     profile = request.user.profile
